@@ -20,7 +20,5 @@ Sympy
 Matplotlib
 
 # Installation
-pip install python
-
 conda install -c conda-forge ffmpeg
 
