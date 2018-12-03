@@ -8,13 +8,19 @@ View using http://nbviewer.jupyter.org/
 
 # Prerequisities
 Python 3.6
+
 ffmpeg
+
 Numpy
+
 Scipy
+
 Sympy
+
 Matplotlib
 
 # Installation
 pip install python
+
 conda install -c conda-forge ffmpeg
 
