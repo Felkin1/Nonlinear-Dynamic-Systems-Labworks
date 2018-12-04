@@ -141,7 +141,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{Assignment \#2}
+    \title{Labwork assignment \#2 for P130M100 Nonlinear Dynamical Models}
     
     
     
@@ -280,36 +280,32 @@
     
 
     
-    \hypertarget{labwork-assignment-2-for-p130m100-nonlinear-dynamical-models}{%
-\section{Labwork assignment \#2 for P130M100 Nonlinear Dynamical
-Models}\label{labwork-assignment-2-for-p130m100-nonlinear-dynamical-models}}
-
     \hypertarget{cheatsheets}{%
-\subsection{Cheatsheets}\label{cheatsheets}}
+\section{Cheatsheets}\label{cheatsheets}}
 
 https://wch.github.io/latexsheet/ - Latex
 
     \hypertarget{notebook-link}{%
-\subsection{Notebook Link}\label{notebook-link}}
+\section{Notebook Link}\label{notebook-link}}
 
 http://nbviewer.jupyter.org/github/Felkin1/Nonlinear-Dynamic-Systems-Labworks/blob/master/Assignment\%20\%232.ipynb
 
     \hypertarget{initial-programming-environment-preparations}{%
-\subsection{Initial programming environment
+\section{Initial programming environment
 preparations}\label{initial-programming-environment-preparations}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-        \PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k}{import} \PY{n}{dsolve}\PY{p}{,} \PY{n}{Eq}\PY{p}{,} \PY{n}{symbols}\PY{p}{,} \PY{n}{Function}
-        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{animation}\PY{p}{,} \PY{n}{rc}
-        \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{HTML}
-        \PY{k+kn}{from} \PY{n+nn}{pylab} \PY{k}{import} \PY{n}{rcParams}
+{\color{incolor}In [{\color{incolor}62}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         \PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k}{import} \PY{n}{dsolve}\PY{p}{,} \PY{n}{Eq}\PY{p}{,} \PY{n}{symbols}\PY{p}{,} \PY{n}{Function}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{animation}\PY{p}{,} \PY{n}{rc}
+         \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{HTML}
+         \PY{k+kn}{from} \PY{n+nn}{pylab} \PY{k}{import} \PY{n}{rcParams}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}57}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+{\color{incolor}In [{\color{incolor}63}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
          \PY{n}{rc}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{animation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{html}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{jshtml}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{c+c1}{\PYZsh{}rcParams[\PYZsq{}figure.figsize\PYZsq{}] = 10, 5}
          \PY{n}{HTML}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}\PYZdq{}\PYZdq{}}
@@ -325,11 +321,11 @@ preparations}\label{initial-programming-environment-preparations}}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}57}]:} <IPython.core.display.HTML object>
+{\color{outcolor}Out[{\color{outcolor}63}]:} <IPython.core.display.HTML object>
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}58}]:} \PY{k}{def} \PY{n+nf}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}64}]:} \PY{k}{def} \PY{n+nf}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)}\PY{p}{:}
              \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
              \PY{n}{line}\PY{p}{,} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
              \PY{c+c1}{\PYZsh{}plt.close(fig)}
@@ -356,10 +352,10 @@ preparations}\label{initial-programming-environment-preparations}}
 
 
     \hypertarget{task-1}{%
-\subsection{Task 1}\label{task-1}}
+\section{Task 1}\label{task-1}}
 
 \hypertarget{outline}{%
-\subsubsection{Outline}\label{outline}}
+\subsection{Outline}\label{outline}}
 
 Follow the Lindstedt's method description in the lecture notes (in
 Moodle). Note, that the method is illustrated for Duffing's equation and
@@ -371,7 +367,7 @@ visualize the derived solutions -- do not forget that the time scale is
 transformed.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}59}]:} \PY{k}{def} \PY{n+nf}{x\PYZus{}func1}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}65}]:} \PY{k}{def} \PY{n+nf}{x\PYZus{}func1}\PY{p}{(}\PY{p}{)}\PY{p}{:}
              \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}
          
          \PY{k}{def} \PY{n+nf}{y\PYZus{}func1}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{i}\PY{p}{)}\PY{p}{:}
@@ -391,7 +387,7 @@ transformed.
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}60}]:} \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
+{\color{incolor}In [{\color{incolor}66}]:} \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
          \PY{n}{x}\PY{p}{,}\PY{n}{y} \PY{o}{=} \PY{n}{plot\PYZus{}test1}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
          \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{)}
          \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Plot 1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
@@ -399,12 +395,12 @@ transformed.
 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}61}]:} \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
+{\color{incolor}In [{\color{incolor}67}]:} \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
          \PY{n}{animation\PYZus{}1} \PY{o}{=} \PY{n}{animate}\PY{p}{(}\PY{n}{animate\PYZus{}test1}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}
          \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Animated Plot 1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
          \PY{n}{animation\PYZus{}1}
@@ -412,14 +408,14 @@ transformed.
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}61}]:} <matplotlib.animation.FuncAnimation at 0x1d20a4b1f28>
+{\color{outcolor}Out[{\color{outcolor}67}]:} <matplotlib.animation.FuncAnimation at 0x1d20a70e438>
 \end{Verbatim}
             
     \hypertarget{task-2}{%
-\subsection{Task 2}\label{task-2}}
+\section{Task 2}\label{task-2}}
 
 \hypertarget{outline}{%
-\subsubsection{Outline}\label{outline}}
+\subsection{Outline}\label{outline}}
 
 Hopf bifurcation. Try to simulate a ``real world'' problem -- the
 Brusselator model. Yes, you will not find the description of this model
@@ -438,10 +434,10 @@ with constant coefficients). Discuss what type of Hopf bifurcation you
 are able to observe using this model.
 
     \hypertarget{task-3}{%
-\subsection{Task 3}\label{task-3}}
+\section{Task 3}\label{task-3}}
 
 \hypertarget{outline}{%
-\subsubsection{Outline}\label{outline}}
+\subsection{Outline}\label{outline}}
 
 Homoclinic bifurcation. Part 1. Remember the last task from Lab 1? It's
 a high time to return to the same problem. Try to carefully illustrate
@@ -453,10 +449,10 @@ Use numerical integration to identify the critical value of the
 parameter \(A\) where the homoclinic bifurcation occurs.
 
     \hypertarget{task-4}{%
-\subsection{Task 4}\label{task-4}}
+\section{Task 4}\label{task-4}}
 
 \hypertarget{outline}{%
-\subsubsection{Outline}\label{outline}}
+\subsection{Outline}\label{outline}}
 
 The hysteresis effect (the forced Duffing oscillator). The model reads:
 \(\frac{d^2 x}{dt^2} + 0.1\frac{d^2 x}{dt} + x + \alpha x^3 = 0.5 cos(\omega t)\).
@@ -472,10 +468,10 @@ amplitude of t\textbar{}he steady state oscillations on the vertical
 axis. Repeat the simulation at \(\alpha\) = −0.1.
 
     \hypertarget{task-5}{%
-\subsection{Task 5}\label{task-5}}
+\section{Task 5}\label{task-5}}
 
 \hypertarget{outline}{%
-\subsubsection{Outline}\label{outline}}
+\subsection{Outline}\label{outline}}
 
 Period doubling bifurcations and road to chaos in a forced mathematical
 pendulum. This paradigmatic model reads:
