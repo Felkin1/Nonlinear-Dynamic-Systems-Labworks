@@ -288,7 +288,7 @@ https://wch.github.io/latexsheet/ - Latex
     \hypertarget{notebook-link}{%
 \section{Notebook Link}\label{notebook-link}}
 
-http://nbviewer.jupyter.org/github/Felkin1/Nonlinear-Dynamic-Systems-Labworks/blob/master/Assignment\%20\%232.ipynb
+http://nbviewer.jupyter.org/github/Felkin1/Nonlinear-Dynamic-Systems-Labworks/blob/master/Labwork\%20assignment\%20\%232\%20for\%20P130M100\%20Nonlinear\%20Dynamical\%20Models.ipynb
 
     \hypertarget{initial-programming-environment-preparations}{%
 \section{Initial programming environment
@@ -301,10 +301,16 @@ preparations}\label{initial-programming-environment-preparations}}
         \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{animation}\PY{p}{,} \PY{n}{rc}
         \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{HTML}
         \PY{k+kn}{from} \PY{n+nn}{pylab} \PY{k}{import} \PY{n}{rcParams}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}
         \PY{k+kn}{from} \PY{n+nn}{mpl\PYZus{}toolkits}\PY{n+nn}{.}\PY{n+nn}{mplot3d} \PY{k}{import} \PY{n}{Axes3D}
         \PY{k+kn}{from} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{animation} \PY{k}{import} \PY{n}{ArtistAnimation}
         \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{integrate} \PY{k}{import} \PY{n}{odeint}
         \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k}{import} \PY{n}{collect}\PY{p}{,} \PY{n}{expand}\PY{p}{,} \PY{n}{Function}\PY{p}{,} \PY{n}{Symbol}
+        \PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k}{import} \PY{n}{init\PYZus{}printing}
+        \PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k}{import} \PY{n}{sin}\PY{p}{,} \PY{n}{tan}\PY{p}{,} \PY{n}{cos}\PY{p}{,} \PY{n}{sinh}\PY{p}{,} \PY{n}{cosh}\PY{p}{,} \PY{n}{tanh}
+        \PY{k+kn}{from} \PY{n+nn}{sympy}\PY{n+nn}{.}\PY{n+nn}{simplify}\PY{n+nn}{.}\PY{n+nn}{trigsimp} \PY{k}{import} \PY{n}{trigsimp\PYZus{}groebner}
+        \PY{k+kn}{import} \PY{n+nn}{copy}
 \end{Verbatim}
 
 
@@ -397,50 +403,154 @@ visualize the derived solutions -- do not forget that the time scale is
 transformed.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}38}]:} \PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k}{import} \PY{n}{collect}\PY{p}{,} \PY{n}{expand}\PY{p}{,} \PY{n}{Function}\PY{p}{,} \PY{n}{Symbol}
-         \PY{k+kn}{from} \PY{n+nn}{sympy} \PY{k}{import} \PY{n}{init\PYZus{}printing}
-         \PY{n}{init\PYZus{}printing}\PY{p}{(}\PY{p}{)}
-         \PY{n}{x0} \PY{o}{=} \PY{n}{Function}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{x1} \PY{o}{=} \PY{n}{Function}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{x2} \PY{o}{=} \PY{n}{Function}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{x} \PY{o}{=} \PY{n}{Function}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{t} \PY{o}{=} \PY{n}{Symbol}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{eps} \PY{o}{=} \PY{n}{Symbol}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{eps}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{w1} \PY{o}{=} \PY{n}{Symbol}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{w2} \PY{o}{=} \PY{n}{Symbol}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{x} \PY{o}{=} \PY{n}{x0}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{+} \PY{n}{eps} \PY{o}{*} \PY{n}{x1}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{o}{+} \PY{n}{eps} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{x2}\PY{p}{(}\PY{n}{t}\PY{p}{)}
-         \PY{n}{x}
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{init\PYZus{}printing}\PY{p}{(}\PY{p}{)}
+        \PY{n}{x} \PY{o}{=} \PY{n}{Function}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{a} \PY{o}{=} \PY{n}{Symbol}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{T} \PY{o}{=} \PY{n}{Symbol}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 
-\texttt{\color{outcolor}Out[{\color{outcolor}38}]:}
+
+    First derivation (X0)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{X0} \PY{o}{=} \PY{n}{a}\PY{o}{*}\PY{n}{cos}\PY{p}{(}\PY{n}{T}\PY{p}{)}
+        \PY{n}{X0}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}8}]:}
     
-    $$eps^{2} \operatorname{x_{2}}{\left (t \right )} + eps \operatorname{x_{1}}{\left (t \right )} + \operatorname{x_{0}}{\left (t \right )}$$
+    $$a \cos{\left (t \right )}$$
+
+    
+
+    Second derivation (X1)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{X1} \PY{o}{=} \PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{32} \PY{o}{+} \PY{n}{X0}
+        \PY{n}{X1}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}9}]:}
+    
+    $$\frac{a^{3} \left(- \cos{\left (t \right )} + \cos{\left (3 t \right )}\right)}{32} + a \cos{\left (t \right )}$$
+
+    
+
+    Third derivation (X2)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{}X1 = Function(\PYZsq{}X1\PYZsq{})}
+         \PY{n}{X2} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{*}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{128} \PY{o}{+} \PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{l+m+mi}{5}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{1024} \PY{o}{+} \PY{n}{X1}
+         \PY{n}{X2}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}10}]:}
+    
+    $$\frac{a^{5} \left(- \cos{\left (t \right )} + \cos{\left (5 t \right )}\right)}{1024} + \frac{3 a^{5} \left(\cos{\left (t \right )} - \cos{\left (3 t \right )}\right)}{128} + \frac{a^{3} \left(- \cos{\left (t \right )} + \cos{\left (3 t \right )}\right)}{32} + a \cos{\left (t \right )}$$
 
     
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}39}]:} \PY{n}{expr} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{+} \PY{n}{eps} \PY{o}{*} \PY{n}{w1} \PY{o}{+} \PY{n}{eps} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{w2}\PY{p}{)} \PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{x}\PY{o}{.}\PY{n}{diff}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{t}\PY{p}{)} \PY{o}{+} \PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{eps} \PY{o}{*} \PY{n}{x} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{3}
-         \PY{n}{expr}
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{force\PYZus{}duffing}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}
 \end{Verbatim}
 
-\texttt{\color{outcolor}Out[{\color{outcolor}39}]:}
-    
-    $$eps^{2} \operatorname{x_{2}}{\left (t \right )} - eps \left(eps^{2} \operatorname{x_{2}}{\left (t \right )} + eps \operatorname{x_{1}}{\left (t \right )} + \operatorname{x_{0}}{\left (t \right )}\right)^{3} + eps \operatorname{x_{1}}{\left (t \right )} + \left(eps^{2} w_{2} + eps w_{1} + 1\right)^{2} \left(eps^{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{2}}{\left (t \right )} + eps \frac{d^{2}}{d t^{2}} \operatorname{x_{1}}{\left (t \right )} + \frac{d^{2}}{d t^{2}} \operatorname{x_{0}}{\left (t \right )}\right) + \operatorname{x_{0}}{\left (t \right )}$$
 
-    
+    We now integrate the function using Newmark's method and also use the
+approximations to plot the comparison curves.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}40}]:} \PY{n}{expr} \PY{o}{=} \PY{n}{expand}\PY{p}{(}\PY{n}{expr}\PY{p}{)}
-         \PY{n}{new\PYZus{}expr} \PY{o}{=} \PY{n}{collect}\PY{p}{(}\PY{n}{expr}\PY{p}{,} \PY{n}{eps}\PY{p}{)}
-         \PY{n}{new\PYZus{}expr}
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.9}
+         \PY{n}{x} \PY{o}{=} \PY{n}{a}
+         \PY{n}{dx} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{n}{ddx} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{x} \PY{o}{+} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}
+         \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
+         \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{4000}
+         \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}
+         \PY{n}{t\PYZus{}arr} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{t\PYZus{}arr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{t}\PY{p}{)}
+         \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{,}\PY{n}{dx}\PY{p}{,}\PY{n}{ddx}\PY{p}{]}\PY{p}{)}
+         \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+             \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}duffing}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+             \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+             \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
+             \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+             \PY{n}{t\PYZus{}arr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{t}\PY{p}{)}
+         \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+         \PY{n}{t\PYZus{}arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{t\PYZus{}arr}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{k1} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{*}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{8}\PY{p}{;}
+         \PY{n}{w} \PY{o}{=} \PY{l+m+mi}{1} \PY{o}{+} \PY{n}{k1}\PY{p}{;}
+         \PY{n}{tau} \PY{o}{=} \PY{n}{w}\PY{o}{*}\PY{n}{t\PYZus{}arr}
+         \PY{n}{X0} \PY{o}{=} \PY{n}{a}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X0}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+         
+         
+         \PY{k+kn}{from} \PY{n+nn}{numpy} \PY{k}{import} \PY{n}{sin}\PY{p}{,}\PY{n}{cos}
+         
+         \PY{n}{X1} \PY{o}{=} \PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{t\PYZus{}arr}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{32} \PY{o}{+} \PY{n}{X0}
+         
+         \PY{n}{X2} \PY{o}{=} \PY{l+m+mi}{3}\PY{o}{*}\PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{t\PYZus{}arr}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{128} \PY{o}{+} \PY{p}{(}\PY{n}{a}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{cos}\PY{p}{(}\PY{l+m+mi}{5}\PY{o}{*}\PY{n}{t\PYZus{}arr}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{cos}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{1024} \PY{o}{+} \PY{n}{X1}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X2}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{newmark}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Integrated vs Poincaré\PYZhy{}Lindstedt}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s method}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{time}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
-\texttt{\color{outcolor}Out[{\color{outcolor}40}]:}
-    
-    $$- eps^{7} \operatorname{x_{2}}^{3}{\left (t \right )} + eps^{6} \left(w_{2}^{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{2}}{\left (t \right )} - 3 \operatorname{x_{1}}{\left (t \right )} \operatorname{x_{2}}^{2}{\left (t \right )}\right) + eps^{5} \left(2 w_{1} w_{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{2}}{\left (t \right )} + w_{2}^{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{1}}{\left (t \right )} - 3 \operatorname{x_{0}}{\left (t \right )} \operatorname{x_{2}}^{2}{\left (t \right )} - 3 \operatorname{x_{1}}^{2}{\left (t \right )} \operatorname{x_{2}}{\left (t \right )}\right) + eps^{4} \left(w_{1}^{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{2}}{\left (t \right )} + 2 w_{1} w_{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{1}}{\left (t \right )} + w_{2}^{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{0}}{\left (t \right )} + 2 w_{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{2}}{\left (t \right )} - 6 \operatorname{x_{0}}{\left (t \right )} \operatorname{x_{1}}{\left (t \right )} \operatorname{x_{2}}{\left (t \right )} - \operatorname{x_{1}}^{3}{\left (t \right )}\right) + eps^{3} \left(w_{1}^{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{1}}{\left (t \right )} + 2 w_{1} w_{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{0}}{\left (t \right )} + 2 w_{1} \frac{d^{2}}{d t^{2}} \operatorname{x_{2}}{\left (t \right )} + 2 w_{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{1}}{\left (t \right )} - 3 \operatorname{x_{0}}^{2}{\left (t \right )} \operatorname{x_{2}}{\left (t \right )} - 3 \operatorname{x_{0}}{\left (t \right )} \operatorname{x_{1}}^{2}{\left (t \right )}\right) + eps^{2} \left(w_{1}^{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{0}}{\left (t \right )} + 2 w_{1} \frac{d^{2}}{d t^{2}} \operatorname{x_{1}}{\left (t \right )} + 2 w_{2} \frac{d^{2}}{d t^{2}} \operatorname{x_{0}}{\left (t \right )} - 3 \operatorname{x_{0}}^{2}{\left (t \right )} \operatorname{x_{1}}{\left (t \right )} + \operatorname{x_{2}}{\left (t \right )} + \frac{d^{2}}{d t^{2}} \operatorname{x_{2}}{\left (t \right )}\right) + eps \left(2 w_{1} \frac{d^{2}}{d t^{2}} \operatorname{x_{0}}{\left (t \right )} - \operatorname{x_{0}}^{3}{\left (t \right )} + \operatorname{x_{1}}{\left (t \right )} + \frac{d^{2}}{d t^{2}} \operatorname{x_{1}}{\left (t \right )}\right) + \operatorname{x_{0}}{\left (t \right )} + \frac{d^{2}}{d t^{2}} \operatorname{x_{0}}{\left (t \right )}$$
 
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
     
+    Next we plot the distances between newmark's points and the aproximated
+ones
 
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{X0d} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{X0}\PY{p}{)}
+         \PY{n}{X1d} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{X1}\PY{p}{)}
+         \PY{n}{X2d} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{X2}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X0d}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X1d}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X2d}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Aproximation delta}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s from the Integrated solution}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{time}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{distance to newmark}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X0d}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X1d}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{t\PYZus{}arr}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{n}{X2d}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{X2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{,}\PY{l+m+mf}{0.65}\PY{p}{,}\PY{l+m+mf}{0.9}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Aproximation delta}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s from the Integrated solution. Zoomed}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{time}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{distance to newmark}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
     \hypertarget{task-2}{%
 \section{Task 2}\label{task-2}}
 
@@ -490,8 +600,8 @@ An additional \(t\) parameter is added to fit the coding convention for
 the plotting library of the programming language.
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{brusselator}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{)}\PY{p}{:}
-            \PY{k}{return} \PY{p}{[}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{b}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{b}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}22}]:} \PY{k}{def} \PY{n+nf}{brusselator}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{[}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{b}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{b}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}
 \end{Verbatim}
 
 
@@ -499,7 +609,7 @@ the plotting library of the programming language.
 \(b\) and \(a\) set to 1
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}93}]:} \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{p}{]}
          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
              \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{:}
                  \PY{n}{x}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{]}\PY{p}{)}
@@ -533,14 +643,14 @@ the plotting library of the programming language.
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}93}]:} <matplotlib.animation.FuncAnimation at 0x275e868d390>
+{\color{outcolor}Out[{\color{outcolor}23}]:} <matplotlib.animation.FuncAnimation at 0x280ed04b4e0>
 \end{Verbatim}
             
     We identify that when the parameter \(b\) reaches 2, the system develops
 a cycle
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{b} \PY{o}{=} \PY{l+m+mi}{2}
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{b} \PY{o}{=} \PY{l+m+mi}{2}
          \PY{n}{a} \PY{o}{=} \PY{l+m+mi}{1}
          \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{p}{:}
@@ -552,10 +662,71 @@ a cycle
 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_27_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
+    We now write out a distance calculation function for two points and a
+cycle detector function that inputs a list of points and outputs true or
+false depending on if a cycle has formed. For this specific example, we
+simply look for a lack of convergence.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{k}{def} \PY{n+nf}{dist}\PY{p}{(}\PY{n}{x1}\PY{p}{,}\PY{n}{x2}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{p}{(}\PY{n}{x1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{x2}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{p}{(}\PY{n}{x1}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{x2}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{cycle\PYZus{}detector}\PY{p}{(}\PY{n}{xs}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} Simply checking if there is a convergence bruteforce.}
+             \PY{n}{e} \PY{o}{=} \PY{l+m+mf}{0.001}
+             \PY{k}{if} \PY{n}{dist}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{e}\PY{p}{:}
+                 \PY{k}{return} \PY{k+kc}{False}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{return} \PY{k+kc}{True}
+         
+         \PY{k}{def} \PY{n+nf}{cycle\PYZus{}detector2}\PY{p}{(}\PY{n}{xs}\PY{p}{)}\PY{p}{:}
+             \PY{n}{found} \PY{o}{=} \PY{k+kc}{False}
+             \PY{n}{e} \PY{o}{=} \PY{l+m+mf}{0.01}
+             \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{el} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{next\PYZus{}el} \PY{o}{=} \PY{n}{xs}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{19}\PY{p}{]}
+                 \PY{k}{if} \PY{n}{dist}\PY{p}{(}\PY{n}{el}\PY{p}{,}\PY{n}{next\PYZus{}el}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{e}\PY{p}{:}
+                     \PY{k}{return} \PY{k+kc}{False}
+                 \PY{k}{for} \PY{n}{el2} \PY{o+ow}{in} \PY{n}{xs}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{20}\PY{p}{:}\PY{p}{]}\PY{p}{:} 
+                     \PY{k}{if} \PY{n}{dist}\PY{p}{(}\PY{n}{el}\PY{p}{,}\PY{n}{el2}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{e}\PY{p}{:}
+                         \PY{k}{return} \PY{k+kc}{True}
+             \PY{k}{return} \PY{n}{found}
+\end{Verbatim}
+
+
+    Next we plot each combination of parameter \(a\) and \(b\) values from
+0.1 to 4 and mark the cell red if a cycle is formed in that combination
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{point} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{a\PYZus{}arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{)}
+         \PY{n}{b\PYZus{}arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{)}
+         \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
+         \PY{k}{for} \PY{n}{a} \PY{o+ow}{in} \PY{n}{a\PYZus{}arr}\PY{p}{:}
+             \PY{k}{for} \PY{n}{b} \PY{o+ow}{in} \PY{n}{b\PYZus{}arr}\PY{p}{:}
+                 \PY{n}{xs} \PY{o}{=} \PY{n}{odeint}\PY{p}{(}\PY{n}{brusselator}\PY{p}{,} \PY{n}{point}\PY{p}{,} \PY{n}{time}\PY{p}{,}\PY{n}{args}\PY{o}{=}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{)}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} replace the if with some sort of xs analysis to find if it cycles}
+                 \PY{c+c1}{\PYZsh{}print(a)}
+                 \PY{k}{if} \PY{n}{cycle\PYZus{}detector}\PY{p}{(}\PY{n}{xs}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Observing Hopf Bifurcation}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ Red dots \PYZhy{} bifurcation happened}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_31_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{conclusion}{%
+\subsection{Conclusion}\label{conclusion}}
+
+A cycle forms when parameter \(b\) is equal to \(a+1\)
+
     \hypertarget{task-3}{%
 \section{Task 3}\label{task-3}}
 
@@ -586,120 +757,216 @@ We may rewrite the equation as follows:
 \(mx'' + hx' + a\sin(x)=b\)
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{def} \PY{n+nf}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-             \PY{k}{return} \PY{n}{b} \PY{o}{\PYZhy{}}\PY{n}{a}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-             \PY{c+c1}{\PYZsh{}return \PYZhy{}a*np.sin(x[0])}
-         
-         \PY{k}{def} \PY{n+nf}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{:}
-             \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{*}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-             \PY{c+c1}{\PYZsh{}return \PYZhy{}h*point[1] \PYZhy{} a*np.sin(point[0])}
+{\color{incolor}In [{\color{incolor}124}]:} \PY{k}{def} \PY{n+nf}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+              \PY{k}{return} \PY{n}{h} \PY{o}{\PYZhy{}}\PY{n}{a}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{:}
+              \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{*}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{h} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{saddle}\PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{a}\PY{p}{)}\PY{p}{:}
+              \PY{k}{return} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{o}{*}\PY{l+m+mi}{3} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{o}{*}\PY{n}{i} \PY{o}{+} \PY{n}{math}\PY{o}{.}\PY{n}{pi} \PY{o}{\PYZhy{}} \PY{n}{math}\PY{o}{.}\PY{n}{asin}\PY{p}{(}\PY{n}{h}\PY{o}{/}\PY{n}{a}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}19}]:} \PY{k}{def} \PY{n+nf}{initial\PYZus{}points}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Generate a 2 dimensional array for the points needed\PYZsq{}\PYZsq{}\PYZsq{}}
-             \PY{n}{points} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-             \PY{n}{r} \PY{o}{=} \PY{l+m+mf}{0.05}
-             \PY{n}{npoints} \PY{o}{=} \PY{l+m+mi}{10}
-             \PY{n}{dfi} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{n}{npoints}
-             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{npoints}\PY{p}{)}\PY{p}{:}
-                 \PY{n}{x} \PY{o}{=} \PY{n}{dfi}\PY{o}{*}\PY{n}{x}\PY{p}{;}
-                 \PY{n}{points}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-         
-             \PY{k}{return} \PY{n}{points}
-         
-         \PY{k}{def} \PY{n+nf}{initial\PYZus{}points\PYZus{}2}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Generate a 2 dimensional array for the points needed\PYZsq{}\PYZsq{}\PYZsq{}}
-             \PY{n}{points} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-             \PY{n}{r} \PY{o}{=} \PY{l+m+mf}{0.1}\PY{p}{;}
-             \PY{n}{npoints} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{;}
-             \PY{n}{dfi} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{n}{npoints}\PY{p}{;}
-             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{npoints}\PY{p}{)}\PY{p}{:}
-                 \PY{n}{x} \PY{o}{=} \PY{n}{dfi}\PY{o}{*}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
-                 \PY{n}{points}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-             
-             \PY{k}{return} \PY{n}{points}
-         \PY{k}{def} \PY{n+nf}{initial\PYZus{}points\PYZus{}3}\PY{p}{(}\PY{p}{)}\PY{p}{:}
-             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Generate a 2 dimensional array for the points needed\PYZsq{}\PYZsq{}\PYZsq{}}
-             \PY{n}{points} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-             \PY{n}{r} \PY{o}{=} \PY{l+m+mf}{0.1}\PY{p}{;}
-             \PY{n}{npoints} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{;}
-             \PY{n}{dfi} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{n}{npoints}\PY{p}{;}
-             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{npoints}\PY{p}{)}\PY{p}{:}
-                 \PY{n}{x} \PY{o}{=} \PY{n}{dfi}\PY{o}{*}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
-                 \PY{n}{points}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{+}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-             
-             \PY{k}{return} \PY{n}{points}
+{\color{incolor}In [{\color{incolor}145}]:} \PY{k}{def} \PY{n+nf}{initial\PYZus{}points\PYZus{}4}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Generate a 2 dimensional array for the points needed\PYZsq{}\PYZsq{}\PYZsq{}}
+              \PY{n}{points} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+              \PY{n}{r} \PY{o}{=} \PY{l+m+mf}{0.1}\PY{p}{;}
+              \PY{n}{npoints} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{;}
+              \PY{n}{dfi} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{n}{npoints}\PY{p}{;}
+              \PY{n}{starts} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+              \PY{k}{for} \PY{n}{s} \PY{o+ow}{in} \PY{n}{starts}\PY{p}{:}
+                  \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{npoints}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{x} \PY{o}{=} \PY{n}{dfi}\PY{o}{*}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                      \PY{n}{points}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{+}\PY{n}{s}\PY{p}{,}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                      
+              \PY{k}{return} \PY{n}{points}
+          
+          \PY{k}{def} \PY{n+nf}{initial\PYZus{}points\PYZus{}5}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+              \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Generate a 2 dimensional array for the points needed\PYZsq{}\PYZsq{}\PYZsq{}}
+              \PY{n}{points} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+              \PY{n}{r} \PY{o}{=} \PY{l+m+mf}{0.1}\PY{p}{;}
+              \PY{n}{npoints} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{;}
+              \PY{n}{dfi} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{n}{npoints}\PY{p}{;}
+              \PY{n}{starts} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{]}
+              \PY{k}{for} \PY{n}{s} \PY{o+ow}{in} \PY{n}{starts}\PY{p}{:}
+                  \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{npoints}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{x} \PY{o}{=} \PY{n}{dfi}\PY{o}{*}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                      \PY{n}{points}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{+}\PY{n}{s}\PY{p}{,}\PY{n}{r}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                      
+              \PY{k}{return} \PY{n}{points}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{x} \PY{o}{=} \PY{n}{initial\PYZus{}points\PYZus{}2}\PY{p}{(}\PY{p}{)}
-         \PY{n}{a}\PY{p}{,}\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}
-         \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{0}
-         \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{1000}
-         
-         \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
-         \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{5.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         
-         \PY{n}{lines} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:}
-             \PY{n}{lobj} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
-             \PY{n}{lines}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lobj}\PY{p}{)}
-             
-         \PY{c+c1}{\PYZsh{} backwards pass}
-         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:}
-             \PY{n}{lobj} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
-             \PY{n}{lines}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lobj}\PY{p}{)}
-             
-         
-         \PY{k}{def} \PY{n+nf}{animate}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
-             \PY{n}{timetext}\PY{o}{.}\PY{n}{set\PYZus{}text}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b: }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{round(b,2)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-             \PY{c+c1}{\PYZsh{} forward in time}
-             \PY{n}{mid} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{lines}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}
-             \PY{k}{for} \PY{n}{lnum}\PY{p}{,}\PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{lines}\PY{p}{[}\PY{p}{:}\PY{n}{mid}\PY{p}{]}\PY{p}{)}\PY{p}{:}
-                 \PY{n}{point} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{lnum}\PY{p}{]}
-                 \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-                 \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
-                     \PY{n}{f} \PY{o}{=} \PY{n}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
-                     \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
-                     \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
-                 \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
-                 \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-                 
-             \PY{c+c1}{\PYZsh{} backwards in time  }
-             \PY{k}{for} \PY{n}{lnum}\PY{p}{,}\PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{lines}\PY{p}{[}\PY{n}{mid}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{:}  
-                 \PY{n}{point} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{lnum}\PY{p}{]}
-                 \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-                 \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
-                     \PY{n}{f} \PY{o}{=} \PY{n}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
-                     \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
-                     \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
-                     \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
-                 \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
-                 \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-                 
-             \PY{k}{return} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{lines}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{timetext}\PY{p}{,}\PY{p}{)}
-         
-         \PY{n}{arg1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{)}
-         \PY{n}{arg2} \PY{o}{=} \PY{l+m+mf}{0.3}
-         \PY{n}{arg3} \PY{o}{=} \PY{l+m+mf}{0.1}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
-         \PY{n}{anim} \PY{o}{=} \PY{n}{animation}\PY{o}{.}\PY{n}{FuncAnimation}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{func}\PY{o}{=}\PY{n}{animate}\PY{p}{,} \PY{n}{fargs}\PY{o}{=}\PY{p}{(}\PY{n}{arg2}\PY{p}{,}\PY{n}{arg3}\PY{p}{,}\PY{p}{)}\PY{p}{,}\PY{n}{init\PYZus{}func}\PY{o}{=}\PY{n}{init\PYZus{}multi}\PY{p}{,}
-                                                \PY{n}{frames}\PY{o}{=}\PY{n}{arg1}\PY{p}{,} \PY{n}{interval}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{blit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-         
-         \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-         \PY{n}{anim}
+{\color{incolor}In [{\color{incolor}126}]:} \PY{n}{x} \PY{o}{=} \PY{n}{initial\PYZus{}points\PYZus{}5}\PY{p}{(}\PY{p}{)}
+          \PY{n}{a}\PY{p}{,}\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}
+          \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{0}
+          \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{3000}
+          \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
+          \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
+          \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{3.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{lines} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:}
+              \PY{n}{lobj} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+              \PY{n}{lines}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lobj}\PY{p}{)}
+              
+          \PY{c+c1}{\PYZsh{} backwards pass}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:}
+              \PY{n}{lobj} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+              \PY{n}{lines}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lobj}\PY{p}{)}
+              
+          
+          \PY{k}{def} \PY{n+nf}{animate}\PY{p}{(}\PY{n}{h}\PY{p}{,}\PY{n}{a}\PY{p}{,}\PY{n}{b}\PY{p}{)}\PY{p}{:}
+              \PY{n}{timetext}\PY{o}{.}\PY{n}{set\PYZus{}text}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{h: }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{round(h,2)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+              \PY{c+c1}{\PYZsh{} forward in time}
+              \PY{n}{mid} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{lines}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}
+              \PY{k}{for} \PY{n}{lnum}\PY{p}{,}\PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{lines}\PY{p}{[}\PY{p}{:}\PY{n}{mid}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{point} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{lnum}\PY{p}{]}
+                  \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                  \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{f} \PY{o}{=} \PY{n}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+                  \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                  
+              \PY{c+c1}{\PYZsh{} backwards in time  }
+              \PY{k}{for} \PY{n}{lnum}\PY{p}{,}\PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{lines}\PY{p}{[}\PY{n}{mid}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{:}  
+                  \PY{n}{point} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{lnum}\PY{p}{]}
+                  \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                  \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{f} \PY{o}{=} \PY{n}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                      \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+                  \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                  
+              \PY{k}{return} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{lines}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{timetext}\PY{p}{,}\PY{p}{)}
+          
+          \PY{n}{arg1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.4}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{)}
+          \PY{n}{arg2} \PY{o}{=} \PY{l+m+mf}{0.3}
+          \PY{n}{arg3} \PY{o}{=} \PY{l+m+mf}{0.1}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
+          \PY{n}{anim} \PY{o}{=} \PY{n}{animation}\PY{o}{.}\PY{n}{FuncAnimation}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{func}\PY{o}{=}\PY{n}{animate}\PY{p}{,} \PY{n}{fargs}\PY{o}{=}\PY{p}{(}\PY{n}{arg2}\PY{p}{,}\PY{n}{arg3}\PY{p}{,}\PY{p}{)}\PY{p}{,}\PY{n}{init\PYZus{}func}\PY{o}{=}\PY{n}{init\PYZus{}multi}\PY{p}{,}
+                                                 \PY{n}{frames}\PY{o}{=}\PY{n}{arg1}\PY{p}{,} \PY{n}{interval}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{blit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+          
+          \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{15}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}127}]:} \PY{n}{anim}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}20}]:} <matplotlib.animation.FuncAnimation at 0x275e276f908>
+{\color{outcolor}Out[{\color{outcolor}127}]:} <matplotlib.animation.FuncAnimation at 0x280fcc2aeb8>
 \end{Verbatim}
             
+    Homoclinic bifurcation at point \(a\) = 0.30
+
+    \hypertarget{solution---part-2}{%
+\subsection{Solution - Part 2}\label{solution---part-2}}
+
+    We set m,k = 1,1,1 h = a and then vary a
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{k}{def} \PY{n+nf}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{*} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+         
+         \PY{k}{def} \PY{n+nf}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{*} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}115}]:} \PY{n}{x} \PY{o}{=} \PY{n}{initial\PYZus{}points\PYZus{}4}\PY{p}{(}\PY{p}{)}
+          \PY{n}{a}\PY{p}{,}\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}
+          \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}
+          \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{1000}
+          \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
+          \PY{n}{fig}\PY{p}{,}\PY{n}{ax}\PY{p}{,}\PY{n}{line} \PY{o}{=} \PY{n}{init\PYZus{}fig}\PY{p}{(}\PY{p}{)} 
+          \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{0.225}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{lines} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:}
+              \PY{n}{lobj} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+              \PY{n}{lines}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lobj}\PY{p}{)}
+              
+          \PY{c+c1}{\PYZsh{} backwards pass}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:}
+              \PY{n}{lobj} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+              \PY{n}{lines}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lobj}\PY{p}{)}
+              
+          
+          \PY{k}{def} \PY{n+nf}{animate}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{b}\PY{p}{)}\PY{p}{:}
+              \PY{n}{timetext}\PY{o}{.}\PY{n}{set\PYZus{}text}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{a: }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{round(a,2)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+              \PY{c+c1}{\PYZsh{} forward in time}
+              \PY{n}{h} \PY{o}{=} \PY{n}{a}
+              \PY{n}{mid} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{lines}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}
+              \PY{k}{for} \PY{n}{lnum}\PY{p}{,}\PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{lines}\PY{p}{[}\PY{p}{:}\PY{n}{mid}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{point} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{lnum}\PY{p}{]}
+                  \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                  \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{f} \PY{o}{=} \PY{n}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+                  \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+              
+            
+              \PY{c+c1}{\PYZsh{} backwards in time  }
+              \PY{k}{for} \PY{n}{lnum}\PY{p}{,}\PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{lines}\PY{p}{[}\PY{n}{mid}\PY{p}{:}\PY{p}{]}\PY{p}{)}\PY{p}{:}  
+                  \PY{n}{point} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{lnum}\PY{p}{]}
+                  \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                  \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{f} \PY{o}{=} \PY{n}{force}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                      \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+                  \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+              \PY{k}{return} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{lines}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{timetext}\PY{p}{,}\PY{p}{)}
+          
+          \PY{n}{arg1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{)}
+          \PY{n}{arg2} \PY{o}{=} \PY{l+m+mi}{1}
+          \PY{n}{arg3} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
+          \PY{n}{anim} \PY{o}{=} \PY{n}{animation}\PY{o}{.}\PY{n}{FuncAnimation}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{func}\PY{o}{=}\PY{n}{animate}\PY{p}{,} \PY{n}{fargs}\PY{o}{=}\PY{p}{(}\PY{n}{arg2}\PY{p}{,}\PY{n}{arg3}\PY{p}{,}\PY{p}{)}\PY{p}{,}\PY{n}{init\PYZus{}func}\PY{o}{=}\PY{n}{init\PYZus{}multi}\PY{p}{,}
+                                                 \PY{n}{frames}\PY{o}{=}\PY{n}{arg1}\PY{p}{,} \PY{n}{interval}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{blit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+          
+          \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Varying parameter \PYZdl{}a\PYZdl{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}116}]:} \PY{n}{anim}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+D:\textbackslash{}Programs\textbackslash{}Anaconda\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:5: RuntimeWarning: overflow encountered in double\_scalars
+  """
+D:\textbackslash{}Programs\textbackslash{}Anaconda\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:5: RuntimeWarning: invalid value encountered in double\_scalars
+  """
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}116}]:} <matplotlib.animation.FuncAnimation at 0x280fc58ffd0>
+\end{Verbatim}
+            
+    Around \(a = -0.2\) we can see a `jump' effect, this is where the
+homoclinic bifurcation happened and a cycle formed.
+
     \hypertarget{task-4}{%
 \section{Task 4}\label{task-4}}
 
@@ -719,23 +986,230 @@ requested to plot? -- \(\omega\) on the horizontal axis -- and the
 amplitude of t\textbar{}he steady state oscillations on the vertical
 axis. Repeat the simulation at \(\alpha\) = −0.1.
 
+    \hypertarget{solution}{%
+\subsection{Solution}\label{solution}}
+
+We start by specifying our force and acceleration functions
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}41}]:} \PY{k}{def} \PY{n+nf}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}\PY{p}{:}
-             \PY{k}{return} \PY{l+m+mf}{0.5}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}
-         
-         \PY{k}{def} \PY{n+nf}{ddx0\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{:}
-             \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{*}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+m+mf}{0.5}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{o}{*}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}
+{\color{incolor}In [{\color{incolor}128}]:} \PY{k}{def} \PY{n+nf}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+              \PY{k}{return} \PY{l+m+mf}{0.5}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}
+          
+          \PY{k}{def} \PY{n+nf}{ddx0\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{:}
+              \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{*}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+m+mf}{0.5}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{a}\PY{o}{*}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}
+\end{Verbatim}
+
+
+    Then proceed to plot the model in the \(x\) and \(\dot{x}\) axis to get
+a feel for what we are working with.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}129}]:} \PY{n}{point} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+          \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{5.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          
+          \PY{n}{w} \PY{o}{=} \PY{l+m+mf}{0.25}
+          \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.1}
+          \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{0}
+          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
+          \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{20000}
+          \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)} 
+          \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+              \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
+              \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+              \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+              \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
+          \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+          
+          \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}x\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZdl{}}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{dot(x)\PYZdl{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Duffing oscillator at \PYZdl{}w\PYZdl{} = 0.25}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_50_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We then check the effect of \(w\) on the model by replotting for each
+\(w\) value from 0 to 2 and back
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}131}]:} \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}
+          \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+          
+          
+          \PY{n}{lines} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:}
+              \PY{n}{lobj} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+              \PY{n}{lines}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lobj}\PY{p}{)}
+          
+          \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.1}
+          \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{0}
+          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
+          \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{10000}
+          
+          \PY{k}{def} \PY{n+nf}{animate}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
+              \PY{n}{timetext}\PY{o}{.}\PY{n}{set\PYZus{}text}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{w: }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{round(w,2)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+              \PY{c+c1}{\PYZsh{} forward in time}
+              \PY{n}{mid} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{lines}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}
+              \PY{k}{for} \PY{n}{lnum}\PY{p}{,}\PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{lines}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{point} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{lnum}\PY{p}{]}
+                  \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                  \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)} 
+                  \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+                      \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
+                      \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                      \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                      \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
+                  \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+                  \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+              \PY{k}{return} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{lines}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{timetext}\PY{p}{,}\PY{p}{)}
+          
+                  
+          
+          \PY{n}{ws} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{)}
+          \PY{n}{ws2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.01}\PY{p}{)}
+          \PY{n}{ws3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{ws}\PY{p}{,} \PY{n}{ws2}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+          
+          \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.1}
+          \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{0}
+          \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mf}{3.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
+          \PY{n}{anim} \PY{o}{=} \PY{n}{animation}\PY{o}{.}\PY{n}{FuncAnimation}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{func}\PY{o}{=}\PY{n}{animate}\PY{p}{,} \PY{n}{fargs}\PY{o}{=}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{p}{)}\PY{p}{,}\PY{n}{init\PYZus{}func}\PY{o}{=}\PY{n}{init\PYZus{}multi}\PY{p}{,}
+                                                 \PY{n}{frames}\PY{o}{=}\PY{n}{ws3}\PY{p}{,} \PY{n}{interval}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{blit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+          
+          \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Hysteresis effect at \PYZdl{}a\PYZdl{} = 0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}59}]:} \PY{n}{point} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}132}]:} \PY{n}{anim}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}132}]:} <matplotlib.animation.FuncAnimation at 0x280faefeba8>
+\end{Verbatim}
+            
+    Next, we plot \(w\) in the x axis and the amplitude of the settled cycle
+in the y axis.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}146}]:} \PY{n}{point} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+          \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{5.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{ws} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{)}
+          \PY{n}{ws2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.01}\PY{p}{)}
+          \PY{n}{ws3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{ws}\PY{p}{,} \PY{n}{ws2}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+          
+          \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.1}
+          \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{0}
+          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
+          \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{20000}
+          \PY{n}{iterations2} \PY{o}{=} \PY{l+m+mi}{10000}
+          \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{xtemp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{arr} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)} 
+          \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{ws}\PY{p}{:}
+              \PY{c+c1}{\PYZsh{} regular spin till cycle forms}
+              \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
+                  \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
+                  
+              \PY{c+c1}{\PYZsh{} second spin to fetch min and max y}
+              \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{n}{x\PYZus{}new}\PY{p}{]}
+              \PY{n}{x\PYZus{}temp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+              \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations2}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
+                  \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{n}{x\PYZus{}temp}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
+              \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+              \PY{n}{ys} \PY{o}{=} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+              \PY{n}{amp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{x\PYZus{}temp}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{x\PYZus{}temp}\PY{p}{)}
+              \PY{n}{arr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{w}\PY{p}{,}\PY{n}{amp}\PY{p}{]}\PY{p}{)}
+              \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{n}{x\PYZus{}new}\PY{p}{]}
+          
+          \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)} 
+          \PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{arr}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{arr}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{arr}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+          \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{amplitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Hysteresis effect at \PYZdl{}a\PYZdl{} = 0.1 with w varrying from 0 to 2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}    
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+          
+          \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{arr} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)} 
+          \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{ws2}\PY{p}{:}
+              \PY{c+c1}{\PYZsh{}print(w)}
+              \PY{c+c1}{\PYZsh{} regular spin till cycle forms}
+              \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
+                  \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
+                  
+              \PY{c+c1}{\PYZsh{} second spin to fetch min and max y}
+              \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{n}{x\PYZus{}new}\PY{p}{]}
+              \PY{n}{x\PYZus{}temp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+              \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations2}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
+                  \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{n}{x\PYZus{}temp}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
+              \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
+              \PY{n}{ys} \PY{o}{=} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+              \PY{n}{amp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{x\PYZus{}temp}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{x\PYZus{}temp}\PY{p}{)}
+              \PY{n}{arr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{w}\PY{p}{,}\PY{n}{amp}\PY{p}{]}\PY{p}{)}
+              \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{n}{x\PYZus{}new}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_55_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}147}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+          \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)} 
+          \PY{n}{arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{arr}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{arr}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{arr}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+          \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{amplitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Hysteresis effect at \PYZdl{}a\PYZdl{} = 0.1 with w varrying from 2 to 0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}  
+          \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{invert\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_56_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}91}]:} \PY{n}{point} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
          \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
          \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{5.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          
          
          \PY{n}{w} \PY{o}{=} \PY{l+m+mi}{0}
-         \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.1}
+         \PY{n}{a} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.1}
          \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{0}
          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
          \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
@@ -748,112 +1222,30 @@ axis. Repeat the simulation at \(\alpha\) = −0.1.
              \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
              \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
              \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
+             \PY{k}{if} \PY{n}{j} \PY{o}{\PYZlt{}} \PY{n}{iterations}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{:}
+                 \PY{n}{w}\PY{o}{+}\PY{o}{=} \PY{l+m+mi}{4}\PY{o}{/}\PY{n}{iterations}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{w}\PY{o}{\PYZhy{}}\PY{o}{=} \PY{l+m+mi}{4}\PY{o}{/}\PY{n}{iterations}
          \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-             
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+         \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Hysteresis effect at a= \PYZhy{}0.1 with w varrying inbetween iterations}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}    
          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-    
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}91}]:} \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}
-         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
-         
-         
-         \PY{n}{lines} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:}
-             \PY{n}{lobj} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lw}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
-             \PY{n}{lines}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{lobj}\PY{p}{)}
-         
-         \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.1}
-         \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{0}
-         \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
-         \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
-         \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{10000}
-         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
-         \PY{l+s+sd}{for w in w\PYZus{}arr:}
-         \PY{l+s+sd}{    xs = []}
-         \PY{l+s+sd}{    t = 0}
-         \PY{l+s+sd}{    xs.append([point[0],point[1],ddx0\PYZus{}3(a,h,w,t,point)])    }
-         \PY{l+s+sd}{    for j in range(iterations):}
-         \PY{l+s+sd}{        f = force\PYZus{}3(a,xs[j],w,t)}
-         \PY{l+s+sd}{        x\PYZus{}new = newmark(f,dt,m,h,k,xs[j])}
-         \PY{l+s+sd}{        xs.append(x\PYZus{}new)}
-         \PY{l+s+sd}{        t+=dt}
-         \PY{l+s+sd}{    xs = np.array(xs)}
-         \PY{l+s+sd}{    plt.plot(xs[:, 0], \PYZhy{}xs[:, 1],\PYZsq{}b\PYZsq{})}
-         
-         \PY{l+s+sd}{plt.show()}
-         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
-         \PY{k}{def} \PY{n+nf}{animate}\PY{p}{(}\PY{n}{w}\PY{p}{,}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
-             \PY{n}{timetext}\PY{o}{.}\PY{n}{set\PYZus{}text}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{w: }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{round(w,2)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-             \PY{c+c1}{\PYZsh{} forward in time}
-             \PY{n}{mid} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{lines}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}
-             \PY{k}{for} \PY{n}{lnum}\PY{p}{,}\PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{lines}\PY{p}{)}\PY{p}{:}
-                 \PY{n}{point} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{n}{lnum}\PY{p}{]}
-                 \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-                 \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
-                 \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)} 
-                 \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
-                     \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}3}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
-                     \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
-                     \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
-                     \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
-                 \PY{n}{xs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{xs}\PY{p}{)}
-                 \PY{n}{line}\PY{o}{.}\PY{n}{set\PYZus{}data}\PY{p}{(}\PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{xs}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-             \PY{k}{return} \PY{n+nb}{tuple}\PY{p}{(}\PY{n}{lines}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{timetext}\PY{p}{,}\PY{p}{)}
-         
-                 
-         
-         \PY{n}{ws} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{)}
-         \PY{n}{ws2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.01}\PY{p}{)}
-         \PY{n}{ws3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{ws}\PY{p}{,} \PY{n}{ws2}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
-         
-         \PY{n}{a} \PY{o}{=} \PY{l+m+mf}{0.1}
-         \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{0}
-         \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mf}{3.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
-         \PY{n}{anim} \PY{o}{=} \PY{n}{animation}\PY{o}{.}\PY{n}{FuncAnimation}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{func}\PY{o}{=}\PY{n}{animate}\PY{p}{,} \PY{n}{fargs}\PY{o}{=}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{p}{)}\PY{p}{,}\PY{n}{init\PYZus{}func}\PY{o}{=}\PY{n}{init\PYZus{}multi}\PY{p}{,}
-                                                \PY{n}{frames}\PY{o}{=}\PY{n}{ws3}\PY{p}{,} \PY{n}{interval}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{blit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-         
-         \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Hysteresis effect at a= 0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-         \PY{n}{anim}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}91}]:} <matplotlib.animation.FuncAnimation at 0x275e8628400>
-\end{Verbatim}
-            
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}92}]:} \PY{n}{a} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.1}
-         \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{5.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
-         \PY{n}{anim} \PY{o}{=} \PY{n}{animation}\PY{o}{.}\PY{n}{FuncAnimation}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{func}\PY{o}{=}\PY{n}{animate}\PY{p}{,} \PY{n}{fargs}\PY{o}{=}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{p}{)}\PY{p}{,}\PY{n}{init\PYZus{}func}\PY{o}{=}\PY{n}{init\PYZus{}multi}\PY{p}{,}
-                                                \PY{n}{frames}\PY{o}{=}\PY{n}{ws3}\PY{p}{,} \PY{n}{interval}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{blit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-         
-         \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Hysteresis effect at a= \PYZhy{}0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-         \PY{n}{anim}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-C:\textbackslash{}ProgramData\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:2: RuntimeWarning: overflow encountered in double\_scalars
+D:\textbackslash{}Programs\textbackslash{}Anaconda\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:2: RuntimeWarning: overflow encountered in double\_scalars
   
-C:\textbackslash{}ProgramData\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:7: RuntimeWarning: invalid value encountered in double\_scalars
+D:\textbackslash{}Programs\textbackslash{}Anaconda\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:7: RuntimeWarning: invalid value encountered in double\_scalars
   import sys
 
     \end{Verbatim}
 
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}92}]:} <matplotlib.animation.FuncAnimation at 0x275e981cdd8>
-\end{Verbatim}
-            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_57_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
     \hypertarget{task-5}{%
 \section{Task 5}\label{task-5}}
 
@@ -868,65 +1260,92 @@ diagram by slowly varying \(h\) from 1.05 to 1. What are you requested
 to plot? - \(h\) on the horizontal axis -- and Poincare section points
 of \(\frac{dx}{dt}\) on the vertical axis. Comment the results.
 
+    \hypertarget{solution}{%
+\subsection{Solution}\label{solution}}
+
+We proceed by varying parameter \(h\) and saving all the x values after
+iterating for a sufficient amount of steps each time. We then calculate
+the Poincare section points.
+
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor} }]:} \PY{n}{a} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.1}
-        \PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{0}
-        
-        \PY{n}{plt}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
-        \PY{n}{anim} \PY{o}{=} \PY{n}{animation}\PY{o}{.}\PY{n}{FuncAnimation}\PY{p}{(}\PY{n}{fig}\PY{p}{,} \PY{n}{func}\PY{o}{=}\PY{n}{animate}\PY{p}{,} \PY{n}{fargs}\PY{o}{=}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{p}{)}\PY{p}{,}\PY{n}{init\PYZus{}func}\PY{o}{=}\PY{n}{init\PYZus{}multi}\PY{p}{,}
-                                               \PY{n}{frames}\PY{o}{=}\PY{n}{w\PYZus{}arr}\PY{p}{,} \PY{n}{interval}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,} \PY{n}{blit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
-        
-        \PY{n}{set\PYZus{}figure}\PY{p}{(}\PY{n}{ax}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Hysteresis effect at a= \PYZhy{}0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-        \PY{n}{anim}
+{\color{incolor}In [{\color{incolor}134}]:} \PY{k}{def} \PY{n+nf}{force\PYZus{}2}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+              \PY{k}{return} \PY{n}{b}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{ddx0\PYZus{}2}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{:}
+              \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{*}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{b}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}23}]:} \PY{k}{def} \PY{n+nf}{force\PYZus{}2}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}\PY{p}{:}
-             \PY{k}{return} \PY{n}{b}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-         
-         \PY{k}{def} \PY{n+nf}{ddx0\PYZus{}2}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{:}
-             \PY{k}{return} \PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{*}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{b}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{w}\PY{o}{*}\PY{n}{t}\PY{p}{)} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}135}]:} \PY{n}{point} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{5.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{min0} \PY{o}{=} \PY{l+m+mf}{1.00}
+          \PY{n}{max0} \PY{o}{=} \PY{l+m+mf}{1.05}
+          \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{160}
+          \PY{n}{step} \PY{o}{=} \PY{l+m+mi}{100}\PY{o}{/}\PY{n}{count}
+          \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{,}\PY{n}{step}\PY{p}{)}
+          \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+          \PY{n}{h\PYZus{}arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{interp}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{p}{(}\PY{n}{a}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{a}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{min0}\PY{p}{,}\PY{n}{max0}\PY{p}{)}\PY{p}{)}
+          \PY{n}{h\PYZus{}arr} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{2.05} \PY{o}{\PYZhy{}} \PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{h\PYZus{}arr}\PY{p}{]}
+          
+          \PY{n}{w}\PY{o}{=}\PY{l+m+mi}{2}\PY{o}{/}\PY{l+m+mi}{3}
+          \PY{n}{b} \PY{o}{=} \PY{l+m+mf}{2.048}
+          \PY{n}{m}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}
+          \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+          \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
+          \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{300000}
+          \PY{n}{full\PYZus{}arr} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{h} \PY{o+ow}{in} \PY{n}{h\PYZus{}arr}\PY{p}{:}
+              \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+              \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+              \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0\PYZus{}2}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)}    
+              \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
+                  \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}2}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
+                  \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
+                  \PY{k}{if} \PY{n}{j} \PY{o}{\PYZgt{}} \PY{l+m+mi}{15000} \PY{o+ow}{and} \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0} \PY{o+ow}{and} \PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                      \PY{c+c1}{\PYZsh{}ax.plot(h,(x\PYZus{}new[0]+xs[j][0])/2,\PYZsq{},\PYZsq{})}
+                      \PY{n}{full\PYZus{}arr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{h}\PY{p}{,}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{+}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+                  \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{point} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
-         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
-         \PY{n}{timetext} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mf}{5.125}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-         
-         
-         \PY{n}{h\PYZus{}arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mf}{1.05}\PY{p}{,} \PY{l+m+mf}{1.00}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.0005}\PY{p}{)}
-         \PY{n}{w}\PY{o}{=}\PY{l+m+mi}{2}\PY{o}{/}\PY{l+m+mi}{3}
-         \PY{n}{b} \PY{o}{=} \PY{l+m+mf}{2.048}
-         \PY{n}{m}\PY{p}{,}\PY{n}{k} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{0}
-         \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
-         \PY{n}{dt} \PY{o}{=} \PY{l+m+mf}{0.01}
-         \PY{n}{iterations} \PY{o}{=} \PY{l+m+mi}{80000}
-         \PY{k}{for} \PY{n}{h} \PY{o+ow}{in} \PY{n}{h\PYZus{}arr}\PY{p}{:}
-             \PY{n}{xs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-             \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
-             \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{point}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{ddx0\PYZus{}2}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{point}\PY{p}{)}\PY{p}{]}\PY{p}{)}    
-             \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{iterations}\PY{p}{)}\PY{p}{:}
-                 \PY{n}{f} \PY{o}{=} \PY{n}{force\PYZus{}2}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,}\PY{n}{w}\PY{p}{,}\PY{n}{t}\PY{p}{)}
-                 \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{n}{newmark}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{dt}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{n}{h}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
-                 \PY{n}{xs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{)}
-                 \PY{k}{if} \PY{n}{j} \PY{o}{\PYZgt{}} \PY{l+m+mi}{15000} \PY{o+ow}{and} \PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0} \PY{o+ow}{and} \PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0}\PY{p}{:}
-                     \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{h}\PY{p}{,}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{+}\PY{n}{xs}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-                 \PY{n}{t}\PY{o}{+}\PY{o}{=}\PY{n}{dt}
-         
-         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}140}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+          \PY{n}{full\PYZus{}arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{full\PYZus{}arr}\PY{p}{)}
+          \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{full\PYZus{}arr}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{full\PYZus{}arr}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlim}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{1.05}\PY{p}{,}\PY{l+m+mf}{1.00}\PY{p}{]}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}ax.set\PYZus{}ylim(ylim)}
+          \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{The Logistic Map}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{w=2/3, b=2.048, a= 1.05...1.00}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_31_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_62_0.png}
     \end{center}
     { \hspace*{\fill} \\}
     
-    \hypertarget{extras}{%
-\section{Extras}\label{extras}}
+    We attempt to scale the x axis.
 
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}143}]:} \PY{n}{x\PYZus{}new} \PY{o}{=} \PY{p}{[}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{full\PYZus{}arr}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}new}\PY{p}{,} \PY{n}{full\PYZus{}arr}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{scaled a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{The Logistic Map}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{w=2/3, b=2.048, a= 1.05...1.00}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Logorithmically scaled a}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_64_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
 
     % Add a bibliography block to the postdoc
     
